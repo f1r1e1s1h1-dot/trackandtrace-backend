@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.http import JsonResponse
 
 def health(request):
-    return JsonResponse({"ok": True})
+    return JsonResponse({"status": "ok"})
     
 urlpatterns = [
     path('', lambda request: JsonResponse({"status":"ok"})),
