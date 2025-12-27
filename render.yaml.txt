@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: trackandtrace-backend
+    env: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py migrate
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn trackandtrace.wsgi:application
