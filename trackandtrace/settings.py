@@ -79,16 +79,13 @@ WSGI_APPLICATION = 'trackandtrace.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DB_NAME"],
-        "USER": os.environ["DB_USER"],
-        "PASSWORD": os.environ["DB_PASSWORD"],
-        "HOST": os.environ["DB_HOST"],
-        "PORT": os.environ.get("DB_PORT", "5432"),
-        "CONN_MAX_AGE": 0,   # VERY IMPORTANT
-    }
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+
 DATABASES["default"]["OPTIONS"] = {
     "sslmode": "require",
     "connect_timeout": 10,
