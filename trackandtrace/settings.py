@@ -79,10 +79,16 @@ WSGI_APPLICATION = 'trackandtrace.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=0,
+        ssl_require=True,
     )
 }
+DATABASES["default"]["OPTIONS"] = {
+    "sslmode": "require",
+    "connect_timeout": 10,
+}    
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
